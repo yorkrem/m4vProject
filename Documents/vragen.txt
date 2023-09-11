@@ -1,0 +1,11 @@
+Project info:
+
+Haal data op van google en apple health en sla het op in de database.
+
+API C# 
+APP react praat met google api
+
+reflectie op de week in canvas feedpulse vrijdag opschrijven welke feedback ik heb gekregen per week
+
+meeting via teams elke 2 weken
+
