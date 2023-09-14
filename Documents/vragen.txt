@@ -5,8 +5,12 @@ Haal data op van google en apple health en sla het op in de database.
 API C# 
 APP react praat met google api
 
-reflectie op de week in canvas feedpulse vrijdag opschrijven welke feedback ik heb gekregen per week
 
-meeting via teams elke 2 weken
+data word om x aantal tijd opgeslagen?
+ja
+word dan ook de pagina gerefreshed?(niet echt gebruiks vriendelijk als iemand bezig is met die data)
+zelf laten refreshen
 
-Moet klant data altijd opgeslagen worden of alleen als de fysiotherapeut het wilt opslaan.
+
+kan ik zien welke data jullie nu allemaal gebruiken van Garmin?  
+ruben vragen eerst alles binnenhalen en kijken wat erbij zit.
