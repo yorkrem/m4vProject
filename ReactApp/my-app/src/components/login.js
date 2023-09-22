@@ -16,7 +16,6 @@ function Login(){
         setDailySteps(0);
         setUser(res);
         setToken(res.accessToken);
-        //next24Hours();
         scopesRequest();
     }
 
@@ -24,26 +23,32 @@ function Login(){
         console.log("LOGIN FAIL! res: ", res);
     }
 
+    function DatasourcesRequest(){
+        axios.get("https://www.googleapis.com/fitness/v1/users/me/dataSources?dataTypeName=com.google.step_count.delta", {
+            headers: { Authorization: 'Bearer ' + token }
+        })
+        .then(function (response) {
+          console.log(response);
+        });
+    }
+
     function scopesRequest(){
         axios.get("https://www.googleapis.com/fitness/v1/users/me/dataSources/derived:com.google.step_count.delta:com.google.android.gms:estimated_steps/datasets/1694124000000000000-1694210400000000000", {
             headers: { Authorization: 'Bearer ' + token }
         })
         .then(function (response) {
+            console.log(response);
           setStepRecords(response.data.point)
           calculateDailySteps();
         });
     }
+
 
     function calculateDailySteps(){
         stepRecords.map((record) => {
             setDailySteps(dailySteps  => dailySteps + record.value[0].intVal)
         });
     }
-
-    /*function next24Hours(){
-        setStartTime(new Date().getTime());
-        setEndTime(startTime + 86400000);
-    }*/
 
     return(
         <>
@@ -53,8 +58,8 @@ function Login(){
                     buttonText='Login'
                     onSuccess={onSuccess}
                     onFailure={onFailure}
-                    //cookiePolicy={'single_host_origin'}
-                    //isSignedIn={true}
+                    cookiePolicy={'single_host_origin'}
+                    isSignedIn={true}
                 />
             </div>
             <div>
