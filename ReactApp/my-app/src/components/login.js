@@ -1,10 +1,12 @@
 import { GoogleLogin } from 'react-google-login';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from 'axios';
+import { Router,Switch,Route,Redirect, useNavigate} from "react-router-dom"
 
 const clientId = "704267478812-snaf5fajvh8j62b5d16u781q4c8c2imv.apps.googleusercontent.com"
 
 function Login(){
+    const navigate = useNavigate();
     const [user, setUser] = new useState({});
     const [token, setToken] = new useState("");
     const [startTime, setStartTime] = new useState(0);
@@ -16,8 +18,19 @@ function Login(){
         setDailySteps(0);
         setUser(res);
         setToken(res.accessToken);
-        scopesRequest();
+        navigate("/dashboard");
     }
+
+    useEffect(() => {
+        if(token != ""){
+            scopesRequest();
+        }
+    }, [token]);
+
+    useEffect(() => {
+        calculateDailySteps();
+    }, [stepRecords]);
+
 
     const onFailure = (res) => {
         console.log("LOGIN FAIL! res: ", res);
@@ -38,11 +51,9 @@ function Login(){
         })
         .then(function (response) {
             console.log(response);
-          setStepRecords(response.data.point)
-          calculateDailySteps();
+            setStepRecords(response.data.point)
         });
     }
-
 
     function calculateDailySteps(){
         stepRecords.map((record) => {
@@ -58,12 +69,9 @@ function Login(){
                     buttonText='Login'
                     onSuccess={onSuccess}
                     onFailure={onFailure}
-                    cookiePolicy={'single_host_origin'}
-                    isSignedIn={true}
+                    //cookiePolicy={'single_host_origin'}
+                    //isSignedIn={true}
                 />
-            </div>
-            <div>
-                <h4>{dailySteps}</h4>
             </div>
         </>
      

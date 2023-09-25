@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "f/Hqq5rIGWqq+L7OzLIj9xTssl9/K6Iqphk9/n301yVqNp4/W1WecKcUSPIc6uNrqOjpgNyuXSiFURyAgxVAbg==",
+  "success": true,
+  "projectFilePath": "D:\\Mabs4.0\\m4vProject\\m4vAPI\\m4vAPI\\m4vAPI.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\yctjk\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "C:\\Users\\yctjk\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\yctjk\\.nuget\\packages\\swashbuckle.aspnetcore\\6.2.3\\swashbuckle.aspnetcore.6.2.3.nupkg.sha512",
+    "C:\\Users\\yctjk\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.2.3\\swashbuckle.aspnetcore.swagger.6.2.3.nupkg.sha512",
+    "C:\\Users\\yctjk\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.2.3\\swashbuckle.aspnetcore.swaggergen.6.2.3.nupkg.sha512",
+    "C:\\Users\\yctjk\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.2.3\\swashbuckle.aspnetcore.swaggerui.6.2.3.nupkg.sha512"
+  ],
+  "logs": []
+}
