@@ -1,7 +1,8 @@
+import React from 'react';
 import { GoogleLogin } from 'react-google-login';
 import { useState, useEffect } from "react";
 import axios from 'axios';
-import { Router,Switch,Route,Redirect, useNavigate} from "react-router-dom"
+import { useNavigate} from "react-router-dom"
 
 const clientId = "704267478812-snaf5fajvh8j62b5d16u781q4c8c2imv.apps.googleusercontent.com"
 
@@ -12,25 +13,25 @@ function Login(){
     const [startTime, setStartTime] = new useState(0);
     const [endTime, setEndTime] = new useState(0);
     const [stepRecords, setStepRecords] = new useState([]);
-    const [dailySteps, setDailySteps] = new useState(0);
+
     const onSuccess = (res) => {
         console.log("LOGIN SUCCES! Current user: ", res);
-        setDailySteps(0);
-        setUser(res);
+        setUser(res.profileObj);
         setToken(res.accessToken);
-        navigate("/dashboard");
+        //navigate("/dashboard");
     }
 
     useEffect(() => {
         if(token != ""){
-            scopesRequest();
+            //scopesRequest();
         }
     }, [token]);
 
     useEffect(() => {
-        calculateDailySteps();
-    }, [stepRecords]);
-
+        if(user != null){
+            saveUser();
+        }
+    }, [user]);
 
     const onFailure = (res) => {
         console.log("LOGIN FAIL! res: ", res);
@@ -55,18 +56,29 @@ function Login(){
         });
     }
 
-    function calculateDailySteps(){
-        stepRecords.map((record) => {
-            setDailySteps(dailySteps  => dailySteps + record.value[0].intVal)
-        });
+    function saveUser(){
+        axios.post('https://localhost:7080/api/User', {
+            name: user.name,
+            email: user.email,
+            accessToken: token
+          })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
     }
+
+
 
     return(
         <>
+           <h1>Verbind je gezondheidsdata</h1>
            <div id="signInButton">
                 <GoogleLogin
                     clientId={clientId}
-                    buttonText='Login'
+                    buttonText='Koppel'
                     onSuccess={onSuccess}
                     onFailure={onFailure}
                     //cookiePolicy={'single_host_origin'}

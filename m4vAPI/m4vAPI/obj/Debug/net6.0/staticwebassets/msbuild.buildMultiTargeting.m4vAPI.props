@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\m4vAPI.props" />
+</Project>

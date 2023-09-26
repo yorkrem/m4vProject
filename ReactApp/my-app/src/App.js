@@ -1,10 +1,8 @@
-import logo from './logo.svg';
+import React  from 'react';
 import './App.css';
 import Dashboard from './pages/dashboard';
 import Home from './pages/home';
-import { useEffect } from 'react';
-import { gapi } from 'gapi-script';
-import { Router,Switch,Route,Redirect, useNavigate, Routes} from "react-router-dom";
+import { Route, Routes} from "react-router-dom";
 
 function App() {
   return (

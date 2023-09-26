@@ -1,0 +1,31 @@
+Functioneel ontwerp
+technisch ontwerp
+research document
+scrum document
+
+waar kan ik andere documentatie inleveren
+
+
+heel flexibel elke sprint kijken vragen of de prioriteiten nog in orde zijn.
+
+elke sprint documentatie blijven updaten.
+
+functioneel en technisch ontwerp bijwerken per usecases
+
+schrijven wat voor feedback ik wil krijgen.
+
+imbrad opbouw voor onderzoeks documentatie.
+
+bij eindconclusie beantwoord je je hoofdvraag
+
+welke interessante keuzes heb je gemaakt voor het project.
+en beargumenteer dit.
+
+wat is goed en minder goed gegaan.
+
+wat ga je behouden en wat niet.
+
+definition of done in jira board zodat burn down chart
+
+kleinere taken maken van grote user stories.
+
