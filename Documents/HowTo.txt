@@ -4,3 +4,5 @@ inloggen en dan halen ze de data van alle gebruikers op van verschillende health
 Clientid: 704267478812-snaf5fajvh8j62b5d16u781q4c8c2imv.apps.googleusercontent.com
 
 Clientsecret: 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
+
+je kunt garmin koppelen aan apple health en applehealth is gekoppeld aan google fit

@@ -5,16 +5,20 @@ namespace HealthKoppeling.Managers
 {
     public class UserManager: IManager<UserModel>
     {
+        private readonly ICosmosDbService _cosmosDbService;
+        private IEnumerable<UserModel> _user;
         private List<UserModel> users;
-        public UserManager()
+        public UserManager(ICosmosDbService cosmosDbService)
         {
+            _cosmosDbService = cosmosDbService;
             users = new List<UserModel>();
         }
 
-        public void Add(UserModel item)
+        public async void Add(UserModel item)
         {
-            UserModel newUser = new UserModel(item.name, item.email, item.accessToken);
+            UserModel newUser = new UserModel(item.Name, item.Email, item.AccessToken);
             users.Add(newUser);
+            await _cosmosDbService.AddUserAsync(newUser);
         }
 
         public bool CheckIfExists(UserModel item)
@@ -23,7 +27,7 @@ namespace HealthKoppeling.Managers
             {
                 foreach (UserModel user in users)
                 {
-                    if (user.email == item.email)
+                    if (user.Email == item.Email)
                     {
                         return true;
                     }
@@ -41,7 +45,7 @@ namespace HealthKoppeling.Managers
         {
             foreach (UserModel user in users)
             {
-                if (user.email == item.email)
+                if (user.Email == item.Email)
                 {
                     users.Remove(user);
                 }

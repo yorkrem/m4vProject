@@ -18,18 +18,20 @@ function Login(){
         console.log("LOGIN SUCCES! Current user: ", res);
         setUser(res.profileObj);
         setToken(res.accessToken);
+        //DatasourcesRequest()
         //navigate("/dashboard");
     }
 
     useEffect(() => {
         if(token != ""){
-            //scopesRequest();
+            calculateStartEndTime();
+            StepsRequest();
         }
     }, [token]);
 
     useEffect(() => {
         if(user != null){
-            saveUser();
+            //saveUser();
         }
     }, [user]);
 
@@ -44,6 +46,35 @@ function Login(){
         .then(function (response) {
           console.log(response);
         });
+    }
+
+    
+    function StepsRequest(){
+        calculateStartEndTime();
+        axios.post("https://www.googleapis.com/fitness/v1/users/me/dataset:aggregate", 
+        {
+            "aggregateBy": [{
+                "dataTypeName": "com.google.step_count.delta",
+                "dataSourceId": "derived:com.google.step_count.delta:com.google.android.gms:estimated_steps"
+              }],
+              "bucketByTime": { "durationMillis": 86400000 },
+              "startTimeMillis": startTime,
+              "endTimeMillis": endTime
+        },{
+            headers: { Authorization: 'Bearer ' + token }
+           
+        })
+        .then(function (response) {
+          console.log(response);
+        });
+    }
+
+    function calculateStartEndTime(){
+        const currentDate = new Date();
+        currentDate.setHours(0, 0 ,0 ,0);
+        setStartTime(currentDate.getTime());
+        currentDate.setHours(23, 59, 59, 999);
+        setEndTime(currentDate.getTime());
     }
 
     function scopesRequest(){

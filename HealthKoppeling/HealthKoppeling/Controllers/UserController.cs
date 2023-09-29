@@ -21,7 +21,7 @@ namespace HealthKoppeling.Controllers
         [HttpPost]
         public JsonResult CreateUser(UserRequest user)
         {
-            UserModel newUser = new UserModel(user.name, user.email, user.accessToken);
+            UserModel newUser = new UserModel(user.Name, user.Email, user.AccessToken);
             if (userManager.CheckIfExists(newUser))
             {
                 return new JsonResult("user exists");

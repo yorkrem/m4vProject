@@ -1,0 +1,19 @@
+daily summaries is alles wat op een dag gedaan is.
+activities is een activiteit die opgenomen word door de gebruiker.
+alle activiteiten weergeven de zelfde data als de data niet relevant is dan is de waarde 0.
+
+alle activiteiten apart opslaan
+activiteiten apart.
+beargumenteer waarom je keuzes maakt.
+
+Research Report: eerst je valideren wanneer je resultaat goed is voordat je het resultaat hebt zodat je optijd weet of je de goede kant opgaat.
+
+onderbouw je ontwerpen in je functioneel en technisch ontwerp
+navolgbaar
+
+technisch ontwerp infrastructuur toekomstbestendig
+flowchart functioneel ontwerp
+denk na over wat heb ik nodig voor duidelijkheid te creëren voor de volgende programmeur
+Sequence diagram maken
+Klassendiagram
+c4 diagram 

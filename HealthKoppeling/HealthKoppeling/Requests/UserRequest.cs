@@ -2,15 +2,15 @@
 {
     public class UserRequest
     {
-        public string name { get; private set; }
-        public string email { get; private set; }
-        public string accessToken { get; private set; }
+        public string Name { get; private set; }
+        public string Email { get; private set; }
+        public string AccessToken { get; private set; }
 
         public UserRequest(string name, string email, string accesstoken)
         {
-            this.name = name;
-            this.email = email;
-            this.accessToken = accesstoken;
+            this.Name = name;
+            this.Email = email;
+            this.AccessToken = accesstoken;
         }
     }
 }

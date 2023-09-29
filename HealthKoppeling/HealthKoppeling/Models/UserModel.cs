@@ -1,10 +1,17 @@
-﻿namespace HealthKoppeling.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace HealthKoppeling.Models
 {
     public class UserModel
     {
-        public string name { get; private set; }
-        public string email { get; private set; }
-        public string accessToken { get; private set; }
+        [Key]
+        public string id { get; set; }
+        [Required]
+        public string Name { get; private set; }
+        [Required]
+        public string Email { get; private set; }
+        [Required]
+        public string AccessToken { get; private set; }
 
         public UserModel(string name, string email, string accesstoken)
         {
@@ -13,9 +20,10 @@
 
         private void Validation(string name, string email, string accesstoken)
         {
+            this.id = Guid.NewGuid().ToString();
             if (name != null)
             {
-                this.name = name;
+                this.Name = name;
             }
             else
             {
@@ -23,7 +31,7 @@
             }
             if (email != null && email.Contains("@"))
             {
-                this.email = email;
+                this.Email = email;
             }
             else
             {
@@ -31,7 +39,7 @@
             }
             if (accesstoken != null)
             {
-                this.accessToken = accesstoken;
+                this.AccessToken = accesstoken;
             }
             else
             {
