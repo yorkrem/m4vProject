@@ -3,26 +3,32 @@ using HealthKoppeling.Models;
 using HealthKoppeling.Managers;
 using HealthKoppeling.Database;
 using Newtonsoft.Json.Serialization;
+using Microsoft.Azure.Cosmos;
 
-static async Task<CosmosDbService> InititializeCosmosClientInstanceAsync(IConfiguration configurationsection)
+static async Task<UserDbService> InititializeUserInstanceAsync(string databaseName, CosmosClient client)
 {
-    var databaseName = configurationsection["DatabaseName"];
-    var containerName = configurationsection["ContainerName"];
-    var account = configurationsection["Account"];
-    var key = configurationsection["Key"];
-    var client = new Microsoft.Azure.Cosmos.CosmosClient(account, key);
-    var database = await client.CreateDatabaseIfNotExistsAsync(databaseName);
-    var container = await database.Database.CreateContainerIfNotExistsAsync(containerName, "/id");
-    var cosmosDbService = new CosmosDbService(client, databaseName, containerName);
+    var cosmosDbService = new UserDbService(client, databaseName);
+    return cosmosDbService;
+}
+static async Task<StepDbService> InititializeStepsInstanceAsync(string databaseName, CosmosClient client)
+{
+    var cosmosDbService = new StepDbService(client, databaseName);
     return cosmosDbService;
 }
 
-var builder = WebApplication.CreateBuilder(args);
 
+var builder = WebApplication.CreateBuilder(args);
+var configurationsection = builder.Configuration.GetSection("CosmosDb");
+var databaseName = configurationsection["DatabaseName"];
+var account = configurationsection["Account"];
+var key = configurationsection["Key"];
+var client = new Microsoft.Azure.Cosmos.CosmosClient(account, key);
 // Add services to the container.
-builder.Services.AddSingleton<ICosmosDbService>(InititializeCosmosClientInstanceAsync(builder.Configuration.GetSection("CosmosDb")).GetAwaiter().GetResult());
+builder.Services.AddSingleton<ICosmosDbService<UserModel>>(InititializeUserInstanceAsync(databaseName, client).GetAwaiter().GetResult());
+builder.Services.AddSingleton<ICosmosDbService<StepModel>>(InititializeStepsInstanceAsync(databaseName, client).GetAwaiter().GetResult());
 builder.Services.AddControllersWithViews().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore).AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
 builder.Services.AddTransient<IManager<UserModel>, UserManager>();
+builder.Services.AddTransient<IManager<StepModel>, StepManager>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

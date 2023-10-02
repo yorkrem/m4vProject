@@ -2,9 +2,11 @@
 
 namespace HealthKoppeling.Interfaces
 {
-    public interface ICosmosDbService
+    public interface ICosmosDbService<T>
     {
         //Task<IEnumerable<UserModel>> GetAllUsersAsync();
-        Task AddUserAsync(UserModel user);
+        Task AddAsync(T item);
+        Task UpdateAsync(string id, T item);
+        Task<List<T>> GetAllAsync();
     }
 }

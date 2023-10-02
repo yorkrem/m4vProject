@@ -12,8 +12,9 @@ function Login(){
     const [token, setToken] = new useState("");
     const [startTime, setStartTime] = new useState(0);
     const [endTime, setEndTime] = new useState(0);
-    const [stepRecords, setStepRecords] = new useState([]);
+    const [stepRecords, setStepRecords] = new useState({});
 
+    //Start Login Segment
     const onSuccess = (res) => {
         console.log("LOGIN SUCCES! Current user: ", res);
         setUser(res.profileObj);
@@ -22,35 +23,39 @@ function Login(){
         //navigate("/dashboard");
     }
 
+    const onFailure = (res) => {
+        console.log("LOGIN FAIL! res: ", res);
+    }
+    //End Login Segment
+
+    //Start Steps Segment
     useEffect(() => {
         if(token != ""){
             calculateStartEndTime();
-            StepsRequest();
         }
     }, [token]);
 
     useEffect(() => {
-        if(user != null){
-            //saveUser();
+        if(startTime != 0 && endTime != 0){
+            StepsRequest();
         }
-    }, [user]);
-
-    const onFailure = (res) => {
-        console.log("LOGIN FAIL! res: ", res);
-    }
-
-    function DatasourcesRequest(){
-        axios.get("https://www.googleapis.com/fitness/v1/users/me/dataSources?dataTypeName=com.google.step_count.delta", {
-            headers: { Authorization: 'Bearer ' + token }
-        })
-        .then(function (response) {
-          console.log(response);
-        });
-    }
-
+    }, [startTime, endTime]);
     
+    useEffect(() => {
+        if(stepRecords > 0){
+            saveSteps();
+        }
+    }, [stepRecords]);
+
+    function calculateStartEndTime(){
+        const currentDate = new Date();
+        currentDate.setHours(0, 0 ,0 ,0);
+        setStartTime(currentDate.getTime());
+        currentDate.setHours(23, 59, 59, 999);
+        setEndTime(currentDate.getTime());
+    }
+
     function StepsRequest(){
-        calculateStartEndTime();
         axios.post("https://www.googleapis.com/fitness/v1/users/me/dataset:aggregate", 
         {
             "aggregateBy": [{
@@ -62,45 +67,56 @@ function Login(){
               "endTimeMillis": endTime
         },{
             headers: { Authorization: 'Bearer ' + token }
-           
         })
         .then(function (response) {
-          console.log(response);
+          setStepRecords(response.data.bucket[0].dataset[0].point[0].value[0].intVal)
         });
     }
 
-    function calculateStartEndTime(){
-        const currentDate = new Date();
-        currentDate.setHours(0, 0 ,0 ,0);
-        setStartTime(currentDate.getTime());
-        currentDate.setHours(23, 59, 59, 999);
-        setEndTime(currentDate.getTime());
-    }
-
-    function scopesRequest(){
-        axios.get("https://www.googleapis.com/fitness/v1/users/me/dataSources/derived:com.google.step_count.delta:com.google.android.gms:estimated_steps/datasets/1694124000000000000-1694210400000000000", {
-            headers: { Authorization: 'Bearer ' + token }
-        })
-        .then(function (response) {
-            console.log(response);
-            setStepRecords(response.data.point)
-        });
-    }
-
-    function saveUser(){
-        axios.post('https://localhost:7212/api/User', {
-            name: user.name,
-            email: user.email,
-            accessToken: token
-          })
-          .then(function (response) {
-            console.log(response);
+    function saveSteps(){
+        axios.post('https://localhost:7212/api/Step', {
+            dailySteps: stepRecords,
+            startTimeNanos: startTime,
+            endTimeNanos: endTime
           })
           .catch(function (error) {
             console.log(error);
           });
     }
 
+    //End Steps Segment
+
+    //Start User Segment
+    useEffect(() => {
+        if(user != null){
+            saveUser();
+        }
+    }, [user]);
+
+    
+    function saveUser(){
+        axios.post('https://localhost:7212/api/User', {
+            name: user.name,
+            email: user.email,
+            accessToken: token
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+    }
+
+    //End User Segment
+
+ 
+
+    function DatasourcesRequest(){
+        axios.get("https://www.googleapis.com/fitness/v1/users/me/dataSources?dataTypeName=com.google.step_count.delta", {
+            headers: { Authorization: 'Bearer ' + token }
+        })
+        .then(function (response) {
+          console.log(response);
+        });
+    }
 
 
     return(

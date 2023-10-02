@@ -15,12 +15,12 @@ namespace HealthKoppeling.Models
 
         public UserModel(string name, string email, string accesstoken)
         {
+            this.id = Guid.NewGuid().ToString();
             Validation(name, email, accesstoken);
         }
 
         private void Validation(string name, string email, string accesstoken)
         {
-            this.id = Guid.NewGuid().ToString();
             if (name != null)
             {
                 this.Name = name;
