@@ -20,7 +20,7 @@ namespace HealthKoppeling.Controllers
         [HttpPost]
         public JsonResult CreateStep(StepRequest stepRequest)
         {
-            StepModel newStep = new StepModel(stepRequest.DailySteps, stepRequest.StartTime, stepRequest.EndTime);
+            StepModel newStep = new StepModel(stepRequest.DailySteps, stepRequest.StartTimeNanos, stepRequest.EndTimeNanos, stepRequest.UserEmail);
             if (stepManager.CheckIfExists(newStep))
             {
                 stepManager.Update(newStep);

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 
 namespace HealthKoppeling.Models
 {
@@ -9,16 +10,28 @@ namespace HealthKoppeling.Models
         [Required]
         public int DailySteps { get; private set; }
         [Required]
-        public int StartTime { get; private set; }
+        public double StartTime { get; private set; }
         [Required]
-        public int EndTime { get; private set; }
+        public double EndTime { get; private set; }
+        [Required]
+        public string UserEmail { get; private set; }
 
-        public StepModel(int dailySteps, int startTime, int endTime)
+        [JsonConstructor]
+        public StepModel(string id, int dailySteps, double startTime, double endTime, string userEmail)
         {
-            Validation(dailySteps, startTime, endTime);
+            this.id = id;
+            DailySteps = dailySteps;
+            StartTime = startTime;
+            EndTime = endTime;
+            UserEmail = userEmail;
         }
 
-        public void Validation(int dailySteps, int startTime, int endTime)
+        public StepModel(int dailySteps, double startTime, double endTime, string userEmail)
+        {
+            Validation(dailySteps, startTime, endTime, userEmail);
+        }
+
+        public void Validation(int dailySteps, double startTime, double endTime, string userEmail)
         {
             this.id = Guid.NewGuid().ToString();
             if(dailySteps > 0)
@@ -44,6 +57,14 @@ namespace HealthKoppeling.Models
             else
             {
                 throw new Exception("end time is not valid");
+            }
+            if (userEmail.Contains("@"))
+            {
+                UserEmail = userEmail;
+            }
+            else
+            {
+                throw new Exception("email is not valid");
             }
         }
 

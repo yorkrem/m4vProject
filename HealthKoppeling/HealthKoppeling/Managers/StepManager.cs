@@ -37,12 +37,12 @@ namespace HealthKoppeling.Managers
 
         public List<StepModel> Get()
         {
-            return this.steps;
+            return this.steps.ToList();
         }
 
         public void Remove(StepModel item)
         {
-            if(steps.Count != 0)
+            if(steps.Count() != 0)
             {
                 foreach(StepModel step in steps)
                 {

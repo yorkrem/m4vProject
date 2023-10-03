@@ -69,15 +69,17 @@ function Login(){
             headers: { Authorization: 'Bearer ' + token }
         })
         .then(function (response) {
+          //console.log(response.data.bucket[0].dataset[0].point[0].value[0].intVal)
           setStepRecords(response.data.bucket[0].dataset[0].point[0].value[0].intVal)
         });
     }
 
     function saveSteps(){
         axios.post('https://localhost:7212/api/Step', {
-            dailySteps: stepRecords,
-            startTimeNanos: startTime,
-            endTimeNanos: endTime
+            DailySteps: stepRecords,
+            StartTimeNanos: startTime,
+            EndTimeNanos: endTime,
+            UserEmail: user.email
           })
           .catch(function (error) {
             console.log(error);

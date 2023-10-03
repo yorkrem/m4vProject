@@ -3,9 +3,8 @@
     public class StepRequest
     {
         public int DailySteps { get; set; }
-        public int StartTime { get; set; }
-        public int EndTime { get; set;}
-
-
+        public double StartTimeNanos { get; set; }
+        public double EndTimeNanos { get; set;}
+        public string UserEmail { get; set; }
     }
 }
