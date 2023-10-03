@@ -12,14 +12,14 @@ function Login(){
     const [token, setToken] = new useState("");
     const [startTime, setStartTime] = new useState(0);
     const [endTime, setEndTime] = new useState(0);
-    const [stepRecords, setStepRecords] = new useState({});
+    const [stepRecords, setStepRecords] = new useState(0);
+    const [burnedCalories, setBurnedCalories] = new useState(0);
 
     //Start Login Segment
     const onSuccess = (res) => {
         console.log("LOGIN SUCCES! Current user: ", res);
         setUser(res.profileObj);
         setToken(res.accessToken);
-        //DatasourcesRequest()
         //navigate("/dashboard");
     }
 
@@ -28,25 +28,21 @@ function Login(){
     }
     //End Login Segment
 
-    //Start Steps Segment
+   
     useEffect(() => {
         if(token != ""){
             calculateStartEndTime();
+            //DatasourcesRequest()
         }
     }, [token]);
 
     useEffect(() => {
         if(startTime != 0 && endTime != 0){
-            StepsRequest();
+            stepsRequest();
+            burnedCaloriesRequest();
         }
     }, [startTime, endTime]);
     
-    useEffect(() => {
-        if(stepRecords > 0){
-            saveSteps();
-        }
-    }, [stepRecords]);
-
     function calculateStartEndTime(){
         const currentDate = new Date();
         currentDate.setHours(0, 0 ,0 ,0);
@@ -54,8 +50,9 @@ function Login(){
         currentDate.setHours(23, 59, 59, 999);
         setEndTime(currentDate.getTime());
     }
-
-    function StepsRequest(){
+    
+    //Start Steps Segment
+    function stepsRequest(){
         axios.post("https://www.googleapis.com/fitness/v1/users/me/dataset:aggregate", 
         {
             "aggregateBy": [{
@@ -74,6 +71,12 @@ function Login(){
         });
     }
 
+    useEffect(() => {
+        if(stepRecords > 0){
+            saveSteps();
+        }
+    }, [stepRecords]);
+
     function saveSteps(){
         axios.post('https://localhost:7212/api/Step', {
             DailySteps: stepRecords,
@@ -87,6 +90,45 @@ function Login(){
     }
 
     //End Steps Segment
+
+    //Start BurnedCalories Segment
+    function burnedCaloriesRequest(){
+        axios.post("https://www.googleapis.com/fitness/v1/users/me/dataset:aggregate", 
+        {
+            "aggregateBy": [{
+                "dataTypeName": "com.google.calories.expended",
+                "dataSourceId": "derived:com.google.calories.expended:com.google.android.gms:merge_calories_expended"
+              }],
+              "bucketByTime": { "durationMillis": 86400000 },
+              "startTimeMillis": startTime,
+              "endTimeMillis": endTime
+        },{
+            headers: { Authorization: 'Bearer ' + token }
+        })
+        .then(function (response) {
+          //console.log(response.data.bucket[0].dataset[0].point[0].value[0].fpVal)
+          setBurnedCalories(response.data.bucket[0].dataset[0].point[0].value[0].fpVal)
+        });
+    }
+
+    useEffect(() => {
+        if(burnedCalories > 0){
+            saveBurnedCalories();
+        }
+    }, [burnedCalories]);
+
+    function saveBurnedCalories(){
+        axios.post('https://localhost:7212/api/BurnedCalories', {
+            Calories: burnedCalories,
+            StartTimeNanos: startTime,
+            EndTimeNanos: endTime,
+            UserEmail: user.email
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+    }
+    //End BurnedCalories Segment
 
     //Start User Segment
     useEffect(() => {
@@ -112,7 +154,7 @@ function Login(){
  
 
     function DatasourcesRequest(){
-        axios.get("https://www.googleapis.com/fitness/v1/users/me/dataSources?dataTypeName=com.google.step_count.delta", {
+        axios.get("https://www.googleapis.com/fitness/v1/users/me/dataSources?dataTypeName=com.google.calories.expended", {
             headers: { Authorization: 'Bearer ' + token }
         })
         .then(function (response) {
