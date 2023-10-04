@@ -8,12 +8,15 @@ const clientId = "704267478812-snaf5fajvh8j62b5d16u781q4c8c2imv.apps.googleuserc
 
 function Login(){
     const navigate = useNavigate();
-    const [user, setUser] = new useState({});
     const [token, setToken] = new useState("");
     const [startTime, setStartTime] = new useState(0);
     const [endTime, setEndTime] = new useState(0);
+
+    //Saved Data
+    const [user, setUser] = new useState({});
     const [stepRecords, setStepRecords] = new useState(0);
     const [burnedCalories, setBurnedCalories] = new useState(0);
+    const [moveMinutes, setMoveMinutes] = new useState(0);
 
     //Start Login Segment
     const onSuccess = (res) => {
@@ -36,13 +39,6 @@ function Login(){
         }
     }, [token]);
 
-    useEffect(() => {
-        if(startTime != 0 && endTime != 0){
-            stepsRequest();
-            burnedCaloriesRequest();
-        }
-    }, [startTime, endTime]);
-    
     function calculateStartEndTime(){
         const currentDate = new Date();
         currentDate.setHours(0, 0 ,0 ,0);
@@ -50,6 +46,14 @@ function Login(){
         currentDate.setHours(23, 59, 59, 999);
         setEndTime(currentDate.getTime());
     }
+
+    useEffect(() => {
+        if(startTime != 0 && endTime != 0){
+            stepsRequest();
+            burnedCaloriesRequest();
+            moveMinutesRequest();
+        }
+    }, [startTime, endTime]);
     
     //Start Steps Segment
     function stepsRequest(){
@@ -130,6 +134,45 @@ function Login(){
     }
     //End BurnedCalories Segment
 
+    //Start MoveMinutes Segment
+
+    function moveMinutesRequest(){
+        axios.post("https://www.googleapis.com/fitness/v1/users/me/dataset:aggregate", 
+        {
+            "aggregateBy": [{
+                "dataTypeName": "com.google.active_minutes",
+                "dataSourceId": "derived:com.google.active_minutes:com.google.android.gms:merge_active_minutes"
+              }],
+              "bucketByTime": { "durationMillis": 86400000 },
+              "startTimeMillis": startTime,
+              "endTimeMillis": endTime
+        },{
+            headers: { Authorization: 'Bearer ' + token }
+        })
+        .then(function (response) {
+          //console.log(response.data.bucket[0].dataset[0].point[0].value[0].intVal)
+          setMoveMinutes(response.data.bucket[0].dataset[0].point[0].value[0].intVal)
+        });
+    }
+
+    useEffect(() => {
+        if(moveMinutes > 0){
+            saveMoveMinutes();
+        }
+    }, [moveMinutes]);
+
+    function saveMoveMinutes(){
+        axios.post('https://localhost:7212/api/MoveMinutes', {
+            MoveMinutes: moveMinutes,
+            StartTime: startTime,
+            EndTime: endTime,
+            UserEmail: user.email
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+    }
+    //End MoveMinutes Segment
     //Start User Segment
     useEffect(() => {
         if(user != null){
@@ -154,7 +197,7 @@ function Login(){
  
 
     function DatasourcesRequest(){
-        axios.get("https://www.googleapis.com/fitness/v1/users/me/dataSources?dataTypeName=com.google.calories.expended", {
+        axios.get("https://www.googleapis.com/fitness/v1/users/me/dataSources?dataTypeName=com.google.active_minutes", {
             headers: { Authorization: 'Bearer ' + token }
         })
         .then(function (response) {
