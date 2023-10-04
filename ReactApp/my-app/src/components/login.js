@@ -197,7 +197,7 @@ function Login(){
  
 
     function DatasourcesRequest(){
-        axios.get("https://www.googleapis.com/fitness/v1/users/me/dataSources?dataTypeName=com.google.active_minutes", {
+        axios.get("https://www.googleapis.com/fitness/v1/users/me/dataSources?dataTypeName=com.google.step_count.delta", {
             headers: { Authorization: 'Bearer ' + token }
         })
         .then(function (response) {
