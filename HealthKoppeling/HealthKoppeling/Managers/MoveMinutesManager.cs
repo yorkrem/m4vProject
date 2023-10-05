@@ -14,10 +14,10 @@ namespace HealthKoppeling.Managers
             this.moveMinutes = cosmosDbService.GetAllAsync().Result;
         }
 
-        public void Add(MoveMinutesModel item)
+        public async void Add(MoveMinutesModel item)
         {
             moveMinutes.Add(item);
-            cosmosDbService.AddAsync(item);
+            await cosmosDbService.AddAsync(item);
         }
 
         public bool CheckIfExists(MoveMinutesModel item)
@@ -38,20 +38,6 @@ namespace HealthKoppeling.Managers
         public List<MoveMinutesModel> Get()
         {
             return this.moveMinutes;
-        }
-
-        public void Remove(MoveMinutesModel item)
-        {
-            if (moveMinutes.Count != 0)
-            {
-                foreach (MoveMinutesModel mm in moveMinutes)
-                {
-                    if (mm.id == item.id)
-                    {
-                        moveMinutes.Remove(mm);
-                    }
-                }
-            }
         }
 
         public async void Update(MoveMinutesModel item)

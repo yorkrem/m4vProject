@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "TMU2BycTH6C8G2pXnJaBtbQOyljZbw5/MRYqdMvhnHVT7GplqZ23sNvHCo6PL1qkMIHgh/NLa7Lco0QJf6VJpg==",
+  "dgSpecHash": "uI6kAb2jDK9w4jNw8q0TURaUgPzEPVTO20+VxblwUzDYFwM8ImUnYF/Li+u0QTacI8OQ3gGBw+AMWAJEP7WUTw==",
   "success": true,
-  "projectFilePath": "D:\\mabs40\\m4vProject\\HealthKoppeling\\HealthKoppeling\\HealthKoppeling.csproj",
+  "projectFilePath": "D:\\Mabs4.0\\m4vProject\\HealthKoppeling\\HealthKoppeling\\HealthKoppeling.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\yctjk\\.nuget\\packages\\azure.core\\1.19.0\\azure.core.1.19.0.nupkg.sha512",
     "C:\\Users\\yctjk\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\5.0.10\\microsoft.aspnetcore.jsonpatch.5.0.10.nupkg.sha512",

@@ -14,10 +14,10 @@ namespace HealthKoppeling.Managers
             this.burnedCalories = cosmosDbService.GetAllAsync().Result;
         }
 
-        public void Add(BurnedCaloriesModel item)
+        public async void Add(BurnedCaloriesModel item)
         {
             burnedCalories.Add(item);
-            cosmosDbService.AddAsync(item);
+            await cosmosDbService.AddAsync(item);
         }
 
         public bool CheckIfExists(BurnedCaloriesModel item)
@@ -38,20 +38,6 @@ namespace HealthKoppeling.Managers
         public List<BurnedCaloriesModel> Get()
         {
             return this.burnedCalories;
-        }
-
-        public void Remove(BurnedCaloriesModel item)
-        {
-            if (burnedCalories.Count != 0)
-            {
-                foreach (BurnedCaloriesModel calorie in burnedCalories)
-                {
-                    if (calorie.id == item.id)
-                    {
-                        burnedCalories.Remove(calorie);
-                    }
-                }
-            }
         }
 
         public async void Update(BurnedCaloriesModel item)

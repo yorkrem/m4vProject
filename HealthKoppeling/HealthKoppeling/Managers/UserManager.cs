@@ -39,17 +39,6 @@ namespace HealthKoppeling.Managers
             return this.users;
         }
 
-        public void Remove(UserModel item)
-        {
-            foreach (UserModel user in users)
-            {
-                if (user.Email == item.Email)
-                {
-                    users.Remove(user);
-                }
-            }
-        }
-
         public void Update(UserModel item)
         {
             throw new NotImplementedException();

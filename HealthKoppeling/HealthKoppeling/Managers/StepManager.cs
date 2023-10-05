@@ -40,20 +40,6 @@ namespace HealthKoppeling.Managers
             return this.steps;
         }
 
-        public void Remove(StepModel item)
-        {
-            if(steps.Count != 0)
-            {
-                foreach(StepModel step in steps)
-                {
-                    if(step.id == item.id)
-                    {
-                        steps.Remove(step);
-                    }
-                }
-            }
-        }
-
         public async void Update(StepModel item)
         {
             if(steps.Count != 0)

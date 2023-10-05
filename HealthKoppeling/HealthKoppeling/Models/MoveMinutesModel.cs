@@ -40,7 +40,7 @@ namespace HealthKoppeling.Models
             }
             else
             {
-                throw new Exception("daily steps is not valid");
+                throw new Exception("daily minutes is not valid");
             }
             if (startTime > 0)
             {

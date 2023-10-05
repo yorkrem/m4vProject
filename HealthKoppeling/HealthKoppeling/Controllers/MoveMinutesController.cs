@@ -24,7 +24,7 @@ namespace HealthKoppeling.Controllers
             if (moveMinutesManager.CheckIfExists(moveMinutesModel))
             {
                 moveMinutesManager.Update(moveMinutesModel);
-                return new JsonResult("moveMinutes exists");
+                return new JsonResult("moveMinutes updated");
             }
             else
             {
