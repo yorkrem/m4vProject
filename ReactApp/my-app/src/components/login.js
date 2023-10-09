@@ -6,6 +6,7 @@ import axios from "axios"
 import { stepsRequest } from '../data/steps';
 import { burnedCaloriesRequest } from '../data/caloriesBurnt';
 import { moveMinutesRequest } from '../data/moveMinutes';
+import { heartPointsRequest } from '../data/heartPoints';
 
 
 const clientId = "704267478812-snaf5fajvh8j62b5d16u781q4c8c2imv.apps.googleusercontent.com"
@@ -58,6 +59,7 @@ function Login(){
         stepsRequest(token, startTime, endTime, user)
         burnedCaloriesRequest(token, startTime, endTime, user)
         moveMinutesRequest(token, startTime, endTime, user)
+        heartPointsRequest(token, startTime, endTime, user)
     }
 
     useEffect(() => {
@@ -79,7 +81,7 @@ function Login(){
     }
 
     function DatasourcesRequest(){
-        axios.get("https://www.googleapis.com/fitness/v1/users/me/dataSources?dataTypeName=com.google.calories.bmr", {
+        axios.get("https://www.googleapis.com/fitness/v1/users/me/dataSources?dataTypeName=com.google.heart_minutes", {
             headers: { Authorization: 'Bearer ' + token }
         })
         .then(function (response) {

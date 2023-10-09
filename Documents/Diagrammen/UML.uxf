@@ -9,17 +9,17 @@
       <w>360</w>
       <h>180</h>
     </coordinates>
-    <panel_attributes>MoveMinutesModel
+    <panel_attributes>HeartPointModel
 --
 +id{get; private set;}: string
-+MoveMinutes{get; private set;}: int
++HeartPoints{get; private set;}: int
 +StartTime{get; private set;}: double
 +EndTime{get; private set;}: double
 +UserEmail{get; private set;}: string
-+MoveMinutesModel(string, int, double, double, string)
-+MoveMinutesModel(float, double, double, string)
++HeartPointModel(string, int, double, double, string)
++HeartPointModel(float, double, double, string)
 -Validation(int, double, double, string)
-+SetMoveMinutes(int): void</panel_attributes>
++SetHeartPoints(int): void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -30,7 +30,7 @@
       <w>170</w>
       <h>40</h>
     </coordinates>
-    <panel_attributes>MoveMinutesManager
+    <panel_attributes>HeartPointsManager
 --
 </panel_attributes>
     <additional_attributes/>
@@ -82,29 +82,29 @@ m2=1
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>310</x>
+      <x>320</x>
       <y>440</y>
       <w>370</w>
       <h>80</h>
     </coordinates>
-    <panel_attributes>MoveMinutesController
+    <panel_attributes>HeartPointsController
 --
-+CreateMoveMinutes(MoveMinutesRequest) JsonResult
++CreateHeartPoints(HeartPointsRequest) JsonResult
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>670</x>
+      <x>680</x>
       <y>470</y>
-      <w>120</w>
+      <w>110</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-
 m1=1
 m2=1</panel_attributes>
-    <additional_attributes>100.0;10.0;10.0;10.0</additional_attributes>
+    <additional_attributes>90.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
@@ -114,9 +114,9 @@ m2=1</panel_attributes>
       <w>260</w>
       <h>100</h>
     </coordinates>
-    <panel_attributes>MoveMinutesRequest
+    <panel_attributes>HeartPointRequest
 --
-+MoveMinutes{get; set;}: int
++HeartPoints{get; set;}: int
 +StartTime{get; set;}: double
 +EndTime{get; set;}: double
 +UserEmail{get; set;}: string
@@ -132,7 +132,7 @@ m2=1</panel_attributes>
       <w>350</w>
       <h>50</h>
     </coordinates>
-    <panel_attributes>MoveMinutesDbService&lt;MoveMinutesModel&gt;
+    <panel_attributes>HeatPointsDbService&lt;HeartPointModel&gt;
 --
 MoveMinutesDbService(CosmosClient, string)
 </panel_attributes>
