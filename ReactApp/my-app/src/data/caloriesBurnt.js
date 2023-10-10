@@ -14,7 +14,10 @@ export async function burnedCaloriesRequest(token, startTime, endTime, user){
         headers: { Authorization: 'Bearer ' + token }
     })
     .then(function (response) {
-      saveBurnedCalories(response.data?.bucket[0]?.dataset[0]?.point[0]?.value[0]?.fpVal, startTime, endTime, user)
+      if(response.data.bucket[0].dataset[0].point && response.data.bucket[0].dataset[0].point.length > 0){
+        console.log("saving calories")
+        saveBurnedCalories(response.data.bucket[0].dataset[0].point[0].value[0].fpVal, startTime, endTime, user)
+      }
     });
 }
 

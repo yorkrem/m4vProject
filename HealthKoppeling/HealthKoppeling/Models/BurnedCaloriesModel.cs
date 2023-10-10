@@ -9,12 +9,14 @@ namespace HealthKoppeling.Models
         public string id { get; private set; }
         [Required]
         public float Calories { get; private set; }
+
         [Required]
         public double StartTime { get; private set; }
         [Required]
         public double EndTime { get; private set; }
         [Required]
         public string UserEmail { get; private set;  }
+
 
         [JsonConstructor]
         public BurnedCaloriesModel(string id, float calories, double startTime, double endTime, string userEmail)

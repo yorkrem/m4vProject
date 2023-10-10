@@ -6,7 +6,6 @@ import axios from "axios"
 import { stepsRequest } from '../data/steps';
 import { burnedCaloriesRequest } from '../data/caloriesBurnt';
 import { moveMinutesRequest } from '../data/moveMinutes';
-import { bmrRequest } from '../data/bmr';
 
 
 const clientId = "704267478812-snaf5fajvh8j62b5d16u781q4c8c2imv.apps.googleusercontent.com"
@@ -51,7 +50,7 @@ function Login(){
 
     useEffect(() => {
         if(startTime != 0 && endTime != 0){
-            initializeData()
+            initializeData();
         }
     }, [startTime, endTime]);
 
@@ -59,7 +58,6 @@ function Login(){
         stepsRequest(token, startTime, endTime, user)
         burnedCaloriesRequest(token, startTime, endTime, user)
         moveMinutesRequest(token, startTime, endTime, user)
-        bmrRequest(token, startTime, endTime, user)
     }
 
     useEffect(() => {
