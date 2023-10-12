@@ -4,7 +4,7 @@ import { Platform } from 'react-native';
 
 const permissions: HealthKitPermissions = {
     permissions: {
-        read: [AppleHealthKit.Constants.Permissions.Steps],
+        read: [AppleHealthKit.Constants.Permissions.Steps, AppleHealthKit.Constants.Permissions.BasalEnergyBurned, AppleHealthKit.Constants.Permissions.ActiveEnergyBurned, ],
         write: []
     }
   }
@@ -53,6 +53,12 @@ const useHealthData = (date: Date) => {
       setSteps(results.value);
     })
   }, [hasPermissions])
+
+  useEffect(() => {
+    if(Platform.OS != 'android'){
+      return;
+    }
+  })
 
   return {
     steps
