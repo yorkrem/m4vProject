@@ -5,11 +5,12 @@ import AppleHealthKit, {HealthInputOptions, HealthKitPermissions} from 'react-na
 import useHealthData from './src/hooks/useHealthData';
 
 export default function App() {
-  const {steps} = useHealthData(new Date(2023, 9, 12));
+  const {steps} = useHealthData(new Date(2023, 10, 13));
 
   return (
     <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
+      <Text>Amount of steps:</Text>
+      <Text>{steps}</Text>
       <StatusBar style="auto" />
     </View> 
   );

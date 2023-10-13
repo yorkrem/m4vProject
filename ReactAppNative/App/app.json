@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "iosApp",
-    "slug": "iosApp",
+    "name": "App",
+    "slug": "App",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -22,13 +22,19 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.anonymous.iosApp"
+      "package": "com.anonymous.App",
+      "permissions": [
+        "android.permission.health.READ_STEPS"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "react-native-health"
+      "react-native-health",
+      "./androidManifestPlugin.js",
+      "react-native-health-connect",
+      "expo-build-properties"
     ]
   }
 }
