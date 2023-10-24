@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import AppleHealthKit, {HealthInputOptions, HealthKitPermissions} from 'react-native-health';
+import AppleHealthKit, {HealthInputOptions, HealthKitPermissions, HealthValue} from 'react-native-health';
 import { Platform } from 'react-native';
 import { initialize, readRecords, requestPermission } from 'react-native-health-connect';
 import { TimeRangeFilter } from 'react-native-health-connect/lib/typescript/types/base.types';
 
 const permissions: HealthKitPermissions = {
     permissions: {
-        read: [AppleHealthKit.Constants.Permissions.Steps, AppleHealthKit.Constants.Permissions.BasalEnergyBurned, AppleHealthKit.Constants.Permissions.ActiveEnergyBurned, ],
+        read: [AppleHealthKit.Constants.Permissions.Steps, AppleHealthKit.Constants.Permissions.BasalEnergyBurned, AppleHealthKit.Constants.Permissions.ActiveEnergyBurned, AppleHealthKit.Constants.Permissions.AppleExerciseTime],
         write: []
     }
   }
@@ -14,6 +14,7 @@ const permissions: HealthKitPermissions = {
 const useHealthData = (date: Date) => {
   const [hasPermissions, setHasPermissions] = useState(false);
   const [steps, setSteps] = useState(0);
+  const [exerciseTime, setExerciseTime] = useState(0);
 
 
   //IOS-HEALTHKIT
@@ -56,6 +57,16 @@ const useHealthData = (date: Date) => {
       console.log(results.value);
       setSteps(results.value);
     })
+    AppleHealthKit.getAppleExerciseTime(options, (error, results) => {
+      if(error){
+        console.log("error getting exercise time");
+        return;
+      }
+      const myArray: any = results.values; // Use any when you're certain of the type
+      const thirdValue = myArray[3] as number;
+      console.log(thirdValue);
+      setExerciseTime(thirdValue)
+    }
   }, [hasPermissions])
 
   //Android-HealthConnect
