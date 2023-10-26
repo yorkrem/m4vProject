@@ -66,7 +66,7 @@ const useHealthData = (date: Date) => {
       const thirdValue = myArray[3] as number;
       console.log(thirdValue);
       setExerciseTime(thirdValue)
-    }
+    })
   }, [hasPermissions])
 
   //Android-HealthConnect
