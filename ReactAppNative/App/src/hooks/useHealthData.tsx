@@ -14,7 +14,9 @@ const permissions: HealthKitPermissions = {
 const useHealthData = (date: Date) => {
   const [hasPermissions, setHasPermissions] = useState(false);
   const [steps, setSteps] = useState(0);
-  const [exerciseTime, setExerciseTime] = useState(0);
+  const [exerciseTime, setExerciseTime] = useState({});
+  const [basalEnergyBurned, setBasalEnergyBurned] = useState({});
+  const [activeEnergyBurned, setActiveEnergyBurned] = useState({});
 
 
   //IOS-HEALTHKIT
@@ -54,20 +56,62 @@ const useHealthData = (date: Date) => {
         console.log("error getting steps");
         return;
       }
-      console.log(results.value);
-      setSteps(results.value);
-    })
+      setSteps(results.value)
+    });
     AppleHealthKit.getAppleExerciseTime(options, (error, results) => {
       if(error){
         console.log("error getting exercise time");
         return;
       }
-      const myArray: any = results.values; // Use any when you're certain of the type
-      const thirdValue = myArray[3] as number;
-      console.log(thirdValue);
-      setExerciseTime(thirdValue)
-    }
+      setExerciseTime(results.values)
+    });
+    AppleHealthKit.getBasalEnergyBurned(options, (error, results) => {
+      if(error){
+        console.log("error getting basal energy");
+        return;
+      }
+      setBasalEnergyBurned(results.values);
+    });
+    AppleHealthKit.getActiveEnergyBurned(options, (error, results) => {
+      if(error){
+        console.log("error getting active energy burned")
+        return;
+      }
+      setActiveEnergyBurned(results.values);
+    })
   }, [hasPermissions])
+
+  async function sendSteps(){
+    fetch('https://localhost:7212/api/Step', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        DailySteps: steps,
+        /*StartTime: startTime,
+        EndTime: endTime,
+        UserEmail: user.email*/
+      }),
+    });
+  }
+
+  /*async function sendExerciseTime(){
+    fetch('https://localhost:7212/api/MoveMinutes', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        MoveMinutes: exerciseTime,
+        StartTime: startTime,
+        EndTime: endTime,
+        UserEmail: user.email
+      }),
+    });
+  }*/
 
   //Android-HealthConnect
  const readSampleData = async () => {
