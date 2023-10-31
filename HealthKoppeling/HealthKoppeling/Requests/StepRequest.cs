@@ -3,8 +3,7 @@
     public class StepRequest
     {
         public int DailySteps { get; set; }
-        public double StartTime { get; set; }
-        public double EndTime { get; set;}
-        public string UserEmail { get; set; }
+        public string StartDate { get; set; }
+        public string EndDate { get; set;}
     }
 }

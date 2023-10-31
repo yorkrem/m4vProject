@@ -16,7 +16,9 @@ const useHealthData = (date: Date) => {
   const [steps, setSteps] = useState(0);
   const [exerciseTime, setExerciseTime] = useState({});
   const [basalEnergyBurned, setBasalEnergyBurned] = useState({});
-  const [activeEnergyBurned, setActiveEnergyBurned] = useState({});
+  const [caloriesBurned, setCaloriesBurned] = useState(0);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("")
 
 
   //IOS-HEALTHKIT
@@ -63,26 +65,29 @@ const useHealthData = (date: Date) => {
         console.log("error getting exercise time");
         return;
       }
-      setExerciseTime(results.values)
+      //setExerciseTime(results.values)
     });
     AppleHealthKit.getBasalEnergyBurned(options, (error, results) => {
       if(error){
         console.log("error getting basal energy");
         return;
       }
-      setBasalEnergyBurned(results.values);
+      //setBasalEnergyBurned(results.values);
     });
     AppleHealthKit.getActiveEnergyBurned(options, (error, results) => {
       if(error){
         console.log("error getting active energy burned")
         return;
       }
-      setActiveEnergyBurned(results.values);
+      //setCaloriesBurned(results.values);
     })
   }, [hasPermissions])
 
   async function sendSteps(){
-    fetch('https://localhost:7212/api/Step', {
+    console.log(steps)
+    console.log(startDate)
+    console.log(endDate)
+    fetch('https://192.168.222.114:7212/api/Step', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -90,10 +95,14 @@ const useHealthData = (date: Date) => {
       },
       body: JSON.stringify({
         DailySteps: steps,
-        /*StartTime: startTime,
-        EndTime: endTime,
-        UserEmail: user.email*/
-      }),
+        StartDate: startDate,
+        EndDate: endDate,
+       //UserEmail: user.email
+      })
+    }).then((response) => {
+      console.log(response)
+    }).catch((error) => {
+      console.log(error)
     });
   }
 
@@ -120,33 +129,67 @@ const useHealthData = (date: Date) => {
       return;
     }
     await requestPermission([
-      {accessType: 'read', recordType: 'Steps'},
+      {
+        accessType: 'read', 
+        recordType: 'Steps'
+      },
+      {
+        accessType: 'read',
+        recordType: 'TotalCaloriesBurned'
+      },
+      {
+        accessType: 'read',
+        recordType: 'BasalMetabolicRate'
+      }
     ]);
 
+    //setting dates
+    var startDate = new Date(date.setHours(0,0,0,0)).toISOString();
+    var endDate = new Date(date.setHours(23,59,59,59)).toISOString();
+
+    //filter
     const timeRangeFilter: TimeRangeFilter = {
       operator: 'between',
-      startTime: new Date(date.setHours(0,0,0,0)).toISOString(),
-      endTime: new Date(date.setHours(23, 59, 59,59)).toISOString()
+      startTime: startDate,
+      endTime: endDate
     };
-    
+
+    setStartDate(startDate.toString());
+    setEndDate(endDate.toString());
+
     //Steps
     const steps = await readRecords('Steps', {timeRangeFilter});
-    console.log(steps);
     const totalSteps = steps.reduce((sum, cur) => sum + cur.count, 0);
+    console.log("Steps: " + totalSteps)
     setSteps(totalSteps);
+
+    //Calories
+    const activeCalories = await readRecords('TotalCaloriesBurned', {timeRangeFilter});
+    const totalcalories = activeCalories.reduce((sum, cur) => sum + cur.energy.inKilocalories, 0);
+    setCaloriesBurned(totalcalories);
+    console.log("Calories: " + totalcalories)
+
+    //Bmr
+    const bmr = await readRecords('BasalMetabolicRate', {timeRangeFilter});
+    console.log("Bmr: " + bmr);
  };
 
  useEffect(() => {
   if(Platform.OS != 'android'){
     return;
   }
-  readSampleData();
-})
+    readSampleData();
+  }, [])
 
-
+  useEffect(() => {
+    if(steps > 0){
+      sendSteps()
+    }
+  },[steps])
 
   return {
-    steps
+    steps,
+    caloriesBurned
   };
 };
 

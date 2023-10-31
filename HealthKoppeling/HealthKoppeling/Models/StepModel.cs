@@ -10,28 +10,25 @@ namespace HealthKoppeling.Models
         [Required]
         public int DailySteps { get; private set; }
         [Required]
-        public double StartTime { get; private set; }
+        public string StartDate { get; private set; }
         [Required]
-        public double EndTime { get; private set; }
-        [Required]
-        public string UserEmail { get; private set; }
+        public string EndDate { get; private set; }
 
         [JsonConstructor]
-        public StepModel(string id, int dailySteps, double startTime, double endTime, string userEmail)
+        public StepModel(string id, int dailySteps, string startDate, string endDate)
         {
             this.id = id;
             DailySteps = dailySteps;
-            StartTime = startTime;
-            EndTime = endTime;
-            UserEmail = userEmail;
+            StartDate = startDate;
+            EndDate = endDate;
         }
 
-        public StepModel(int dailySteps, double startTime, double endTime, string userEmail)
+        public StepModel(int dailySteps, string startDate, string endDate)
         {
-            Validation(dailySteps, startTime, endTime, userEmail);
+            Validation(dailySteps, startDate, endDate);
         }
 
-        public void Validation(int dailySteps, double startTime, double endTime, string userEmail)
+        public void Validation(int dailySteps, string startDate, string endDate)
         {
             this.id = Guid.NewGuid().ToString();
             if(dailySteps > 0)
@@ -42,29 +39,21 @@ namespace HealthKoppeling.Models
             {
                 throw new Exception("daily steps is not valid");
             }
-            if(startTime > 0)
+            if(startDate != "")
             {
-                StartTime = startTime;
+                StartDate = startDate;
             }
             else
             {
                 throw new Exception("start time is not valid");
             }
-            if (endTime > 0)
+            if (endDate != "")
             {
-                EndTime = endTime;
+                EndDate = endDate;
             }
             else
             {
                 throw new Exception("end time is not valid");
-            }
-            if (userEmail.Contains("@"))
-            {
-                UserEmail = userEmail;
-            }
-            else
-            {
-                throw new Exception("email is not valid");
             }
         }
 
