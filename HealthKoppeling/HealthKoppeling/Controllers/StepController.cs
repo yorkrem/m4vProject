@@ -17,6 +17,12 @@ namespace HealthKoppeling.Controllers
             this.stepManager = stepManager;
         }
 
+        [HttpGet]
+        public JsonResult Get()
+        {
+            return new JsonResult("poort staat open");
+        }
+
         [HttpPost]
         public JsonResult CreateStep(StepRequest stepRequest)
         {

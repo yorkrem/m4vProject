@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useState } from 'react';
 import AppleHealthKit, {HealthInputOptions, HealthKitPermissions, HealthValue} from 'react-native-health';
 import { Platform } from 'react-native';
@@ -87,7 +88,9 @@ const useHealthData = (date: Date) => {
     console.log(steps)
     console.log(startDate)
     console.log(endDate)
-    fetch('https://192.168.222.114:7212/api/Step', {
+    
+    //
+    fetch('http://192.168.222.114:5082/api/Step', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -96,30 +99,33 @@ const useHealthData = (date: Date) => {
       body: JSON.stringify({
         DailySteps: steps,
         StartDate: startDate,
-        EndDate: endDate,
-       //UserEmail: user.email
-      })
-    }).then((response) => {
-      console.log(response)
+        EndDate: endDate
+      }),
+    }).then((result) => {
+      console.log(result);
     }).catch((error) => {
-      console.log(error)
-    });
+      console.log(error);
+    })
+    /*axios.post("http://192.168.222.114:5082/api/Step", {
+      DailySteps: steps,
+      StartDate: startDate,
+      EndDate: endDate
+    },
+    {
+      headers: {
+        "content-type": "application/x-www-form-urlencoded",
+        accept: "application/json"
+      }
+    }
+    ).then((result) => {
+      console.log(result);
+    }).catch((err) => {
+      console.log(err);
+    })*/
   }
 
   /*async function sendExerciseTime(){
-    fetch('https://localhost:7212/api/MoveMinutes', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        MoveMinutes: exerciseTime,
-        StartTime: startTime,
-        EndTime: endTime,
-        UserEmail: user.email
-      }),
-    });
+   
   }*/
 
   //Android-HealthConnect
