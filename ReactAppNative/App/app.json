@@ -24,7 +24,9 @@
       },
       "package": "com.anonymous.App",
       "permissions": [
-        "android.permission.health.READ_STEPS"
+        "android.permission.health.READ_STEPS",
+        "android.permission.health.READ_TOTAL_CALORIES_BURNED",
+        "android.permission.health.READ_BASAL_METABOLIC_RATE"
       ]
     },
     "web": {

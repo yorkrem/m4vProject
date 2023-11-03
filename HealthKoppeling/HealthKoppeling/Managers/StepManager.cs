@@ -26,7 +26,7 @@ namespace HealthKoppeling.Managers
             { 
                 foreach(StepModel step in steps)
                 {
-                    if(step.StartTime == item.StartTime)
+                    if(step.StartDate == item.StartDate)
                     {
                         return true;
                     }
@@ -46,7 +46,7 @@ namespace HealthKoppeling.Managers
             {
                 foreach(StepModel step in steps)
                 {
-                    if(step.StartTime == item.StartTime)
+                    if(step.StartDate == item.StartDate)
                     {
                         step.SetSteps(item.DailySteps);
                         await cosmosDbService.UpdateAsync(step.id, step);

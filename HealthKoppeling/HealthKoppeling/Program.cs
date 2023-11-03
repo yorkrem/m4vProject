@@ -27,12 +27,6 @@ static async Task<MoveMinutesDbService> InititializeMoveMinutesInstanceAsync(str
     return cosmosDbService;
 }
 
-static async Task<BMRDbService> InititializeBmrInstanceAsync(string databaseName, CosmosClient client)
-{
-    var cosmosDbService = new BMRDbService(client, databaseName);
-    return cosmosDbService;
-}
-
 var builder = WebApplication.CreateBuilder(args);
 var configurationsection = builder.Configuration.GetSection("CosmosDb");
 var databaseName = configurationsection["DatabaseName"];
@@ -44,13 +38,11 @@ builder.Services.AddSingleton<ICosmosDbService<UserModel>>(InititializeUserInsta
 builder.Services.AddSingleton<ICosmosDbService<StepModel>>(InititializeStepsInstanceAsync(databaseName, client).GetAwaiter().GetResult());
 builder.Services.AddSingleton<ICosmosDbService<BurnedCaloriesModel>>(InititializeBurnedCaloriesInstanceAsync(databaseName, client).GetAwaiter().GetResult());
 builder.Services.AddSingleton<ICosmosDbService<MoveMinutesModel>>(InititializeMoveMinutesInstanceAsync(databaseName, client).GetAwaiter().GetResult());
-builder.Services.AddSingleton<ICosmosDbService<BMRModel>>(InititializeBmrInstanceAsync(databaseName, client).GetAwaiter().GetResult());
 builder.Services.AddControllersWithViews().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore).AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
 builder.Services.AddTransient<IManager<UserModel>, UserManager>();
 builder.Services.AddTransient<IManager<StepModel>, StepManager>();
 builder.Services.AddTransient<IManager<BurnedCaloriesModel>, BurnedCaloriesManager>();
 builder.Services.AddTransient<IManager<MoveMinutesModel>, MoveMinutesManager>();
-builder.Services.AddTransient<IManager<BMRModel>, BMRManager>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

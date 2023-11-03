@@ -17,10 +17,16 @@ namespace HealthKoppeling.Controllers
             this.stepManager = stepManager;
         }
 
+        [HttpGet]
+        public JsonResult Get()
+        {
+            return new JsonResult("poort staat open");
+        }
+
         [HttpPost]
         public JsonResult CreateStep(StepRequest stepRequest)
         {
-            StepModel newStep = new StepModel(stepRequest.DailySteps, stepRequest.StartTime, stepRequest.EndTime, stepRequest.UserEmail);
+            StepModel newStep = new StepModel(stepRequest.DailySteps, stepRequest.StartDate, stepRequest.EndDate);
             if (stepManager.CheckIfExists(newStep))
             {
                 stepManager.Update(newStep);
