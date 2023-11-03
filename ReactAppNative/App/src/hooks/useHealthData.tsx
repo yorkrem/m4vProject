@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect, useState } from 'react';
 import AppleHealthKit, {HealthInputOptions, HealthKitPermissions, HealthValue} from 'react-native-health';
 import { Platform } from 'react-native';
@@ -189,7 +188,7 @@ const useHealthData = (date: Date) => {
 
   useEffect(() => {
     if(steps > 0){
-      sendSteps()
+     //sendSteps()
     }
   },[steps])
 
