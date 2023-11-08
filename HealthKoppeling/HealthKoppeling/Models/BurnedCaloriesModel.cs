@@ -14,26 +14,23 @@ namespace HealthKoppeling.Models
         public double StartTime { get; private set; }
         [Required]
         public double EndTime { get; private set; }
-        [Required]
-        public string UserEmail { get; private set;  }
 
 
         [JsonConstructor]
-        public BurnedCaloriesModel(string id, float calories, double startTime, double endTime, string userEmail)
+        public BurnedCaloriesModel(string id, float calories, double startTime, double endTime)
         {
             this.id = id;
             Calories = calories;
             StartTime = startTime;
             EndTime = endTime;
-            UserEmail = userEmail;
         }
 
-        public BurnedCaloriesModel(float calories, double startTime, double endTime, string userEmail)
+        public BurnedCaloriesModel(float calories, double startTime, double endTime)
         {
-            Validation(calories, startTime, endTime, userEmail);   
+            Validation(calories, startTime, endTime);   
         }
 
-        private void Validation(float calories, double startTime,double endTime, string userEmail)
+        private void Validation(float calories, double startTime,double endTime)
         {
             this.id = Guid.NewGuid().ToString();
             if (calories > 0)
@@ -59,14 +56,6 @@ namespace HealthKoppeling.Models
             else
             {
                 throw new Exception("end time is not valid");
-            }
-            if (userEmail.Contains("@"))
-            {
-                UserEmail = userEmail;
-            }
-            else
-            {
-                throw new Exception("email is not valid");
             }
         }
 

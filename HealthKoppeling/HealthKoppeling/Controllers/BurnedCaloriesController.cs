@@ -20,7 +20,7 @@ namespace HealthKoppeling.Controllers
         [HttpPost]
         public JsonResult createBurnedCalories(BurnedCaloriesRequest burnedCaloriesRequest)
         {
-            BurnedCaloriesModel burnedCalories = new BurnedCaloriesModel(burnedCaloriesRequest.Calories, burnedCaloriesRequest.StartTime, burnedCaloriesRequest.EndTime, burnedCaloriesRequest.UserEmail);
+            BurnedCaloriesModel burnedCalories = new BurnedCaloriesModel(burnedCaloriesRequest.Calories, burnedCaloriesRequest.StartTime, burnedCaloriesRequest.EndTime);
             if (burnedCaloriesManager.CheckIfExists(burnedCalories))
             {
                 burnedCaloriesManager.Update(burnedCalories);
