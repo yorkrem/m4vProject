@@ -19,16 +19,23 @@ namespace HealthKoppeling.Controllers
         }
 
         [HttpGet]
-        public BMRModel GetBMR(string startdate)
+        public JsonResult GetBMR(string startdate)
         {
-            BMRModel bmr = bmrManager.GetByDate(startdate);
-            if(bmr != null)
+            try
             {
-                return bmr;
+                BMRModel bmr = bmrManager.GetByDate(startdate);
+                if (bmr != null)
+                {
+                    return new JsonResult(bmr);
+                }
+                else
+                {
+                    throw new Exception("bmr data does not exist for this date");
+                }
             }
-            else
+            catch(Exception) 
             {
-                throw new Exception("bmr data for this date does not exist");
+                return new JsonResult("bmr data does not exist for this date");
             }
         }
 

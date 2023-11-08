@@ -18,17 +18,25 @@ namespace HealthKoppeling.Controllers
         }
 
         [HttpGet]
-        public BurnedCaloriesModel GetBurnedCalories(string startdate)
+        public JsonResult GetBurnedCalories(string startdate)
         {
-            BurnedCaloriesModel burnedCalories = burnedCaloriesManager.GetByDate(startdate);
-            if(burnedCalories != null)
+            try
             {
-                return burnedCalories;
+                BurnedCaloriesModel burnedCalories = burnedCaloriesManager.GetByDate(startdate);
+                if (burnedCalories != null)
+                {
+                    return new JsonResult(burnedCalories);
+                }
+                else
+                {
+                    throw new Exception("burned calorie data does not exist for this date");
+                }
             }
-            else
+            catch (Exception)
             {
-                throw new Exception("burned calories data does not exist for this date");
+                return new JsonResult("burned calories data does not exist for this ");
             }
+           
         }
 
         [HttpPost]

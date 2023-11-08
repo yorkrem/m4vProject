@@ -18,16 +18,23 @@ namespace HealthKoppeling.Controllers
         }
 
         [HttpGet]
-        public StepModel Get(string startdate)
+        public JsonResult Get(string startdate)
         {
-            StepModel step = stepManager.GetByDate(startdate);
-            if (step != null)
+            try
             {
-                return step;
+                StepModel step = stepManager.GetByDate(startdate);
+                if (step != null)
+                {
+                    return new JsonResult(step);
+                }
+                else
+                {
+                    throw new Exception("step data does not exist for this date");
+                }
             }
-            else
+            catch (Exception) 
             {
-                throw new Exception("step data for this date does not exist");
+                return new JsonResult("step data does not exist for this date");
             }
         }
 

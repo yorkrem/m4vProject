@@ -39,6 +39,11 @@ namespace HealthKoppeling.Managers
             return this.users;
         }
 
+        public UserModel GetByDate(string date)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Update(UserModel item)
         {
             throw new NotImplementedException();

@@ -40,6 +40,21 @@ namespace HealthKoppeling.Managers
             return this.moveMinutes;
         }
 
+        public MoveMinutesModel GetByDate(string date)
+        {
+            if (moveMinutes.Count != 0)
+            {
+                foreach (MoveMinutesModel mm in moveMinutes)
+                {
+                    if (mm.StartTime == date)
+                    {
+                        return mm;
+                    }
+                }
+            }
+            return null;
+        }
+
         public async void Update(MoveMinutesModel item)
         {
             if (moveMinutes.Count != 0)

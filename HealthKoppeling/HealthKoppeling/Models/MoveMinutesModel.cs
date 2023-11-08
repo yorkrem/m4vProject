@@ -10,14 +10,14 @@ namespace HealthKoppeling.Models
         [Required]
         public int moveMinutes { get; private set; }
         [Required]
-        public double StartTime { get; private set; }
+        public string StartTime { get; private set; }
         [Required]
-        public double EndTime { get; private set; }
+        public string EndTime { get; private set; }
         [Required]
         public string UserEmail { get; private set; }
 
         [JsonConstructor]
-        public MoveMinutesModel(string id, int moveMinutes, double startTime, double endTime, string userEmail)
+        public MoveMinutesModel(string id, int moveMinutes, string startTime, string endTime, string userEmail)
         {
             this.id = id;
             this.moveMinutes = moveMinutes;
@@ -26,12 +26,12 @@ namespace HealthKoppeling.Models
             UserEmail = userEmail;
         }
 
-        public MoveMinutesModel(int moveMinutes, double startTime, double endTime, string userEmail)
+        public MoveMinutesModel(int moveMinutes, string startTime, string endTime, string userEmail)
         {
             Validation(moveMinutes, startTime, endTime, userEmail);
         }
 
-        private void Validation(int moveMinutes, double startTime, double endTime, string userEmail)
+        private void Validation(int moveMinutes, string startTime, string endTime, string userEmail)
         {
             this.id = Guid.NewGuid().ToString();
             if (moveMinutes > 0)
@@ -42,7 +42,7 @@ namespace HealthKoppeling.Models
             {
                 throw new Exception("daily minutes is not valid");
             }
-            if (startTime > 0)
+            if (startTime != "")
             {
                 StartTime = startTime;
             }
@@ -50,7 +50,7 @@ namespace HealthKoppeling.Models
             {
                 throw new Exception("start time is not valid");
             }
-            if (endTime > 0)
+            if (endTime != "")
             {
                 EndTime = endTime;
             }

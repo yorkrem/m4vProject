@@ -40,6 +40,21 @@ namespace HealthKoppeling.Managers
             return this.burnedCalories;
         }
 
+        public BurnedCaloriesModel GetByDate(string date)
+        {
+            if (burnedCalories.Count != 0)
+            {
+                foreach (BurnedCaloriesModel calories in burnedCalories)
+                {
+                    if (calories.StartTime == date)
+                    {
+                        return calories;
+                    }
+                }
+            }
+            return null;
+        }
+
         public async void Update(BurnedCaloriesModel item)
         {
             if (burnedCalories.Count != 0)

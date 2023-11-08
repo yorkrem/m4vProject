@@ -20,13 +20,13 @@ namespace HealthKoppeling.Managers
             await cosmosDbService.AddAsync(item);
         }
 
-        public bool CheckIfExists(string startdate)
+        public bool CheckIfExists(StepModel newStep)
         {
             if(steps.Count != 0) 
             { 
                 foreach(StepModel step in steps)
                 {
-                    if(step.StartDate == startdate)
+                    if(step.StartDate == newStep.StartDate)
                     {
                         return true;
                     }
