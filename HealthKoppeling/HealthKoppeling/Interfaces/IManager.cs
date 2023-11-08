@@ -9,5 +9,7 @@
         public void Update(T item);
 
         public bool CheckIfExists(T item);
+
+        public T GetByDate(string date);
     }
 }

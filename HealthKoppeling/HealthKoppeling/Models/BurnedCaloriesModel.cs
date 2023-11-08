@@ -11,13 +11,13 @@ namespace HealthKoppeling.Models
         public float Calories { get; private set; }
 
         [Required]
-        public double StartTime { get; private set; }
+        public string StartTime { get; private set; }
         [Required]
-        public double EndTime { get; private set; }
+        public string EndTime { get; private set; }
 
 
         [JsonConstructor]
-        public BurnedCaloriesModel(string id, float calories, double startTime, double endTime)
+        public BurnedCaloriesModel(string id, float calories, string startTime, string endTime)
         {
             this.id = id;
             Calories = calories;
@@ -25,12 +25,12 @@ namespace HealthKoppeling.Models
             EndTime = endTime;
         }
 
-        public BurnedCaloriesModel(float calories, double startTime, double endTime)
+        public BurnedCaloriesModel(float calories, string startTime, string endTime)
         {
             Validation(calories, startTime, endTime);   
         }
 
-        private void Validation(float calories, double startTime,double endTime)
+        private void Validation(float calories, string startTime,string endTime)
         {
             this.id = Guid.NewGuid().ToString();
             if (calories > 0)
@@ -41,7 +41,7 @@ namespace HealthKoppeling.Models
             {
                 throw new Exception("daily burnedcalories is not valid");
             }
-            if (startTime > 0)
+            if (startTime != "")
             {
                 StartTime = startTime;
             }
@@ -49,7 +49,7 @@ namespace HealthKoppeling.Models
             {
                 throw new Exception("start time is not valid");
             }
-            if (endTime > 0)
+            if (endTime != "")
             {
                 EndTime = endTime;
             }

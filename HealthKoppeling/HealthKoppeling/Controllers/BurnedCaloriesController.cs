@@ -17,8 +17,22 @@ namespace HealthKoppeling.Controllers
             this.burnedCaloriesManager = burnedCaloriesManager;
         }
 
+        [HttpGet]
+        public BurnedCaloriesModel GetBurnedCalories(string startdate)
+        {
+            BurnedCaloriesModel burnedCalories = burnedCaloriesManager.GetByDate(startdate);
+            if(burnedCalories != null)
+            {
+                return burnedCalories;
+            }
+            else
+            {
+                throw new Exception("burned calories data does not exist for this date");
+            }
+        }
+
         [HttpPost]
-        public JsonResult createBurnedCalories(BurnedCaloriesRequest burnedCaloriesRequest)
+        public JsonResult CreateBurnedCalories(BurnedCaloriesRequest burnedCaloriesRequest)
         {
             BurnedCaloriesModel burnedCalories = new BurnedCaloriesModel(burnedCaloriesRequest.Calories, burnedCaloriesRequest.StartTime, burnedCaloriesRequest.EndTime);
             if (burnedCaloriesManager.CheckIfExists(burnedCalories))

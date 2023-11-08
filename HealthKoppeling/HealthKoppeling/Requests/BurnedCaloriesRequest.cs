@@ -5,7 +5,7 @@ namespace HealthKoppeling.Requests
     public class BurnedCaloriesRequest
     {
         public float Calories { get; set; }
-        public double StartTime { get; set; }
-        public double EndTime { get; set; }
+        public string StartTime { get; set; }
+        public string EndTime { get; set; }
     }
 }

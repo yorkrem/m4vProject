@@ -20,13 +20,13 @@ namespace HealthKoppeling.Managers
             await cosmosDbService.AddAsync(item);
         }
 
-        public bool CheckIfExists(StepModel item)
+        public bool CheckIfExists(string startdate)
         {
             if(steps.Count != 0) 
             { 
                 foreach(StepModel step in steps)
                 {
-                    if(step.StartDate == item.StartDate)
+                    if(step.StartDate == startdate)
                     {
                         return true;
                     }
@@ -38,6 +38,21 @@ namespace HealthKoppeling.Managers
         public List<StepModel> Get()
         {
             return this.steps;
+        }
+
+        public StepModel GetByDate(string date)
+        {
+            if (steps.Count != 0)
+            {
+                foreach (StepModel step in steps)
+                {
+                    if (step.StartDate == date)
+                    {
+                        return step;
+                    }
+                }
+            }
+            return null;
         }
 
         public async void Update(StepModel item)

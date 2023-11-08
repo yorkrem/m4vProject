@@ -40,6 +40,21 @@ namespace HealthKoppeling.Managers
             return this.burnedCalories;
         }
 
+        public BMRModel GetByDate(string date)
+        {
+            if (burnedCalories.Count != 0)
+            {
+                foreach (BMRModel calories in burnedCalories)
+                {
+                    if (calories.StartTime == date)
+                    {
+                        return calories;
+                    }
+                }
+            }
+            return null;
+        }
+
         public async void Update(BMRModel item)
         {
             if (burnedCalories.Count != 0)

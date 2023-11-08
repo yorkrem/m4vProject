@@ -18,8 +18,22 @@ namespace HealthKoppeling.Controllers
             this.bmrManager = manager;
         }
 
+        [HttpGet]
+        public BMRModel GetBMR(string startdate)
+        {
+            BMRModel bmr = bmrManager.GetByDate(startdate);
+            if(bmr != null)
+            {
+                return bmr;
+            }
+            else
+            {
+                throw new Exception("bmr data for this date does not exist");
+            }
+        }
+
         [HttpPost]
-        public JsonResult createBMR(BMRRequest burnedCaloriesRequest)
+        public JsonResult CreateBMR(BMRRequest burnedCaloriesRequest)
         {
             BMRModel bmr = new BMRModel(burnedCaloriesRequest.Calories, burnedCaloriesRequest.StartTime, burnedCaloriesRequest.EndTime);
             if (bmrManager.CheckIfExists(bmr))

@@ -18,9 +18,17 @@ namespace HealthKoppeling.Controllers
         }
 
         [HttpGet]
-        public JsonResult Get()
+        public StepModel Get(string startdate)
         {
-            return new JsonResult("poort staat open");
+            StepModel step = stepManager.GetByDate(startdate);
+            if (step != null)
+            {
+                return step;
+            }
+            else
+            {
+                throw new Exception("step data for this date does not exist");
+            }
         }
 
         [HttpPost]
