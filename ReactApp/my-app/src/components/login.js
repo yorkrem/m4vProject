@@ -1,64 +1,105 @@
+import React from 'react';
 import { GoogleLogin } from 'react-google-login';
-import { useState } from "react";
-import axios from 'axios';
+import { useState, useEffect } from "react";
+import { useNavigate} from "react-router-dom"
+import axios from "axios"
+import { stepsRequest } from '../data/steps';
+import { burnedCaloriesRequest } from '../data/caloriesBurnt';
+import { moveMinutesRequest } from '../data/moveMinutes';
+
 
 const clientId = "704267478812-snaf5fajvh8j62b5d16u781q4c8c2imv.apps.googleusercontent.com"
 
 function Login(){
-    const [user, setUser] = new useState({});
+    const navigate = useNavigate();
     const [token, setToken] = new useState("");
     const [startTime, setStartTime] = new useState(0);
     const [endTime, setEndTime] = new useState(0);
-    const [stepRecords, setStepRecords] = new useState([]);
-    const [dailySteps, setDailySteps] = new useState(0);
+
+    //Saved Data
+    const [user, setUser] = new useState({});
+
+    //Start Login Segment
     const onSuccess = (res) => {
         console.log("LOGIN SUCCES! Current user: ", res);
-        setDailySteps(0);
-        setUser(res);
+        setUser(res.profileObj);
         setToken(res.accessToken);
-        //next24Hours();
-        scopesRequest();
+        //navigate("/dashboard");
     }
 
     const onFailure = (res) => {
         console.log("LOGIN FAIL! res: ", res);
     }
+    //End Login Segment
 
-    function scopesRequest(){
-        axios.get("https://www.googleapis.com/fitness/v1/users/me/dataSources/derived:com.google.step_count.delta:com.google.android.gms:estimated_steps/datasets/1694124000000000000-1694210400000000000", {
+   
+    useEffect(() => {
+        if(token != ""){
+            calculateStartEndTime();
+            //DatasourcesRequest()
+        }
+    }, [token]);
+
+    function calculateStartEndTime(){
+        const currentDate = new Date();
+        currentDate.setHours(0, 0 ,0 ,0);
+        setStartTime(currentDate.getTime());
+        currentDate.setHours(23, 59, 59, 999);
+        setEndTime(currentDate.getTime());
+    }
+
+    useEffect(() => {
+        if(startTime != 0 && endTime != 0){
+            initializeData();
+        }
+    }, [startTime, endTime]);
+
+    function initializeData(){
+        stepsRequest(token, startTime, endTime, user)
+        burnedCaloriesRequest(token, startTime, endTime, user)
+        moveMinutesRequest(token, startTime, endTime, user)
+    }
+
+    useEffect(() => {
+        if(user != null){
+            saveUser();
+        }
+    }, [user]);
+
+    
+    async function saveUser(){
+        await axios.post('https://localhost:7212/api/User', {
+            name: user.name,
+            email: user.email,
+            accessToken: token
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+    }
+
+    function DatasourcesRequest(){
+        axios.get("https://www.googleapis.com/fitness/v1/users/me/dataSources?dataTypeName=com.google.calories.bmr", {
             headers: { Authorization: 'Bearer ' + token }
         })
         .then(function (response) {
-          setStepRecords(response.data.point)
-          calculateDailySteps();
+          console.log(response);
         });
     }
 
-    function calculateDailySteps(){
-        stepRecords.map((record) => {
-            setDailySteps(dailySteps  => dailySteps + record.value[0].intVal)
-        });
-    }
-
-    /*function next24Hours(){
-        setStartTime(new Date().getTime());
-        setEndTime(startTime + 86400000);
-    }*/
 
     return(
         <>
+           <h1>Verbind je gezondheidsdata</h1>
            <div id="signInButton">
                 <GoogleLogin
                     clientId={clientId}
-                    buttonText='Login'
+                    buttonText='Koppel'
                     onSuccess={onSuccess}
                     onFailure={onFailure}
-                    //cookiePolicy={'single_host_origin'}
-                    //isSignedIn={true}
+                    cookiePolicy={'single_host_origin'}
+                    isSignedIn={true}
                 />
-            </div>
-            <div>
-                <h4>{dailySteps}</h4>
             </div>
         </>
      

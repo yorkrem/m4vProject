@@ -1,0 +1,16 @@
+Project info:
+
+Haal data op van google en apple health en sla het op in de database.
+
+API C# 
+APP react praat met google api
+
+
+data word om x aantal tijd opgeslagen?
+ja
+word dan ook de pagina gerefreshed?(niet echt gebruiks vriendelijk als iemand bezig is met die data)
+zelf laten refreshen
+
+
+kan ik zien welke data jullie nu allemaal gebruiken van Garmin?  
+ruben vragen eerst alles binnenhalen en kijken wat erbij zit.

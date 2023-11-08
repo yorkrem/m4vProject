@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>710</x>
+      <y>560</y>
+      <w>360</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>MoveMinutesModel
+--
++id{get; private set;}: string
++MoveMinutes{get; private set;}: int
++StartTime{get; private set;}: double
++EndTime{get; private set;}: double
++UserEmail{get; private set;}: string
++MoveMinutesModel(string, int, double, double, string)
++MoveMinutesModel(float, double, double, string)
+-Validation(int, double, double, string)
++SetMoveMinutes(int): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>770</x>
+      <y>450</y>
+      <w>170</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>MoveMinutesManager
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>750</x>
+      <y>270</y>
+      <w>180</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Interface&gt;&gt;
+IManager&lt;T&gt;
+--
++Get() List&lt;T&gt;
++Add(T) void
++Remove(T) void
++CheckIfExists(T) bool
++Update(T): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>830</x>
+      <y>390</y>
+      <w>30</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>830</x>
+      <y>480</y>
+      <w>40</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-
+m1=*
+m2=1
+</panel_attributes>
+    <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>310</x>
+      <y>440</y>
+      <w>370</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>MoveMinutesController
+--
++CreateMoveMinutes(MoveMinutesRequest) JsonResult
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>670</x>
+      <y>470</y>
+      <w>120</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-
+m1=1
+m2=1</panel_attributes>
+    <additional_attributes>100.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>410</x>
+      <y>300</y>
+      <w>260</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>MoveMinutesRequest
+--
++MoveMinutes{get; set;}: int
++StartTime{get; set;}: double
++EndTime{get; set;}: double
++UserEmail{get; set;}: string
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1010</x>
+      <y>440</y>
+      <w>350</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>MoveMinutesDbService&lt;MoveMinutesModel&gt;
+--
+MoveMinutesDbService(CosmosClient, string)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1130</x>
+      <y>380</y>
+      <w>30</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>930</x>
+      <y>470</y>
+      <w>100</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-
+m1=1
+m2=1</panel_attributes>
+    <additional_attributes>80.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1040</x>
+      <y>290</y>
+      <w>240</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Interface&gt;&gt;
+ICosmosDbService&lt;T&gt;
+--
++AddAsync(T)
++UpdateAsync(T, string): Task
++GetAllAsync(T): Task&lt;List&lt;T&gt;&gt;
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
