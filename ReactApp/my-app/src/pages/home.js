@@ -15,8 +15,7 @@ function Home(){
       const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed, so we add 1 and pad with '0' if needed.
       const day = String(currentDate.getDate()).padStart(2, '0');
       const formattedDate = `${day}-${month}-${year}`;
-      const query = "startdate="+"2023-11-06"
-      setCurrentDateQuery(query);
+      setCurrentDateQuery(formattedDate);
     }
 
     useEffect(() => {
