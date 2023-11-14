@@ -1985,11 +1985,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\mabs40\\m4vProject\\HealthKoppeling\\HealthKoppeling\\HealthKoppeling.csproj",
+      "projectUniqueName": "D:\\Mabs4.0\\m4vProject\\HealthKoppeling\\HealthKoppeling\\HealthKoppeling.csproj",
       "projectName": "HealthKoppeling",
-      "projectPath": "D:\\mabs40\\m4vProject\\HealthKoppeling\\HealthKoppeling\\HealthKoppeling.csproj",
+      "projectPath": "D:\\Mabs4.0\\m4vProject\\HealthKoppeling\\HealthKoppeling\\HealthKoppeling.csproj",
       "packagesPath": "C:\\Users\\yctjk\\.nuget\\packages\\",
-      "outputPath": "D:\\mabs40\\m4vProject\\HealthKoppeling\\HealthKoppeling\\obj\\",
+      "outputPath": "D:\\Mabs4.0\\m4vProject\\HealthKoppeling\\HealthKoppeling\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\yctjk\\AppData\\Roaming\\NuGet\\NuGet.Config",
