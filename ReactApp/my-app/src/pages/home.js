@@ -15,7 +15,7 @@ function Home(){
       const year = currentDate.getFullYear();
       const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed, so we add 1 and pad with '0' if needed.
       const day = String(currentDate.getDate()).padStart(2, '0');
-      const formattedDate = `${year}-${month}-${day}`;
+      const formattedDate = `${2023}-${11}-${14}`;
       const query = "startdate="+formattedDate
       setCurrentDateQuery(query);
     }
