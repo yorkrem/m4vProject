@@ -46,7 +46,7 @@ namespace HealthKoppeling.Managers
             {
                 foreach (BMRModel calories in burnedCalories)
                 {
-                    if (calories.StartTime == date)
+                    if (calories.EndTime == date)
                     {
                         return calories;
                     }

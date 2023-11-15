@@ -46,7 +46,7 @@ namespace HealthKoppeling.Managers
             {
                 foreach (StepModel step in steps)
                 {
-                    if (step.StartDate == date)
+                    if (step.EndDate == date)
                     {
                         return step;
                     }

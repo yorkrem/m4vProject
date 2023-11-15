@@ -46,7 +46,7 @@ namespace HealthKoppeling.Managers
             {
                 foreach (MoveMinutesModel mm in moveMinutes)
                 {
-                    if (mm.StartTime == date)
+                    if (mm.EndTime == date)
                     {
                         return mm;
                     }
