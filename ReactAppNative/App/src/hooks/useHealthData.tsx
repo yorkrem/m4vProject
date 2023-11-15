@@ -222,7 +222,7 @@ const useHealthData = (date: Date) => {
   return {
     steps,
     caloriesBurned,
-    message
+    basalEnergyBurned
   };
 };
 
