@@ -170,7 +170,7 @@ const useHealthData = (date: Date) => {
     };
 
     setStartDate(startDate.substring(0,10));
-    setEndDate(endDate.substring(0,10));
+    setEndDate(endDate.substring(0,10)); 
 
     //Steps
     const steps = await readRecords('Steps', {timeRangeFilter});

@@ -9,4 +9,4 @@ namespace HealthKoppeling.Interfaces
         Task UpdateAsync(string id, T item);
         Task<List<T>> GetAllAsync();
     }
-}
+} 
